@@ -1,20 +1,17 @@
-# HRS Website Starter (Vite + React + Tailwind)
+Home Renovation Solutions (HRS) — Capstone Project Website
 
-## Quick start
-1. Install Node.js (LTS) from https://nodejs.org
-2. In a terminal:
-```bash
-cd hrs-website-starter
-npm install
-npm run dev
-```
-Open the printed URL (usually http://localhost:5173).
+This repository contains the web application developed for the Capstone Project at Seminole State College. The site serves as the online presence for Home Renovation Solutions (HRS), showcasing services, products, FAQs and a sample inventory system.
 
-## Deploy (meets "must be hosted")
-- Netlify: new site from Git, build: `npm run build`, publish dir: `dist`
-- Vercel: import repo, one‑click deploy
-- GitHub Pages: `npm run build` then publish `dist`
+Deployed on Netlify: https://hrs-capstone.netlify.app
 
-### Data
-- `src/data/inventory.json` – parsed from HRS-Inventory-List-1.xlsx
-- `src/data/faqs.json` – parsed from HDS-FAQs.docx
+Features
+
+Landing Page – overview of HRS services and call-to-action buttons.
+
+Inventory – searchable appliance/cabinet inventory (from provided dataset) with cost/list price toggle.
+
+FAQs – common customer questions parsed from client documentation.
+
+Services, Products, Contact, About – placeholder sections for business expansion.
+
+Scalable – designed to expand with database integration, employee portal, and VoIP/web integrations later in the semester.
