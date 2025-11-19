@@ -1,12 +1,980 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Renovation Solutions</title>
-  </head>
-  <body class="bg-white">
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>Home Design Solutions | HDS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --primary: #2f4f60;
+      --secondary: #d4a373;
+      --light: #f7f7f7;
+      --dark: #1f2933;
+      --accent: #f4e3cf;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background-color: #ffffff;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1px solid #e5e7eb;
+      backdrop-filter: blur(6px);
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.7rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.4rem;
+      font-size: 0.95rem;
+    }
+
+    nav a {
+      position: relative;
+      padding-bottom: 0.15rem;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--secondary);
+      transition: width 0.2s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .hero {
+      background: linear-gradient(
+          to right,
+          rgba(31, 41, 51, 0.85),
+          rgba(31, 41, 51, 0.65)
+        ),
+        url("https://images.pexels.com/photos/373548/pexels-photo-373548.jpeg?auto=compress&cs=tinysrgb&w=1600")
+        center/cover no-repeat;
+      color: #ffffff;
+      padding: 4.5rem 1rem 4rem;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 3vw + 1rem, 3rem);
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      max-width: 550px;
+      margin-bottom: 1.5rem;
+      color: #e5e7eb;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .badge {
+      font-size: 0.8rem;
+      background: rgba(244, 227, 207, 0.1);
+      border: 1px solid rgba(244, 227, 207, 0.7);
+      border-radius: 999px;
+      padding: 0.35rem 0.7rem;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease,
+        color 0.12s ease, border-color 0.12s ease;
+    }
+
+    .btn-primary {
+      background: var(--secondary);
+      color: #1f2933;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.32);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #f9fafb;
+      border-color: rgba(249, 250, 251, 0.7);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(249, 250, 251, 0.08);
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--dark);
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.35);
+    }
+
+    .hero-card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-card p {
+      font-size: 0.9rem;
+      color: #4b5563;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-form-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr;
+      gap: 0.4rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-card label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #374151;
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    .hero-card input,
+    .hero-card select {
+      width: 100%;
+      padding: 0.45rem 0.55rem;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-size: 0.85rem;
+    }
+
+    .hero-card small {
+      font-size: 0.75rem;
+      color: #6b7280;
+      display: block;
+      margin-top: 0.3rem;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 1rem 4rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1.25rem;
+      gap: 0.75rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.4rem;
+      color: var(--primary);
+    }
+
+    .section-header p {
+      font-size: 0.9rem;
+      color: #6b7280;
+      max-width: 520px;
+    }
+
+    /* About */
+    #about .content {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 1.8rem;
+    }
+
+    #about p {
+      font-size: 0.95rem;
+      color: #374151;
+    }
+
+    .about-highlight {
+      background: var(--accent);
+      padding: 1rem;
+      border-radius: 16px;
+      font-size: 0.9rem;
+      border-left: 4px solid var(--secondary);
+    }
+
+    /* Services */
+    #services {
+      background: var(--light);
+      padding: 2rem 1.2rem;
+      margin: 0 -1.2rem 3rem;
+      border-top: 1px solid #e5e7eb;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    #services .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .service-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 1rem;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.07);
+      border: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .service-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.35rem;
+      color: var(--primary);
+    }
+
+    .service-card p {
+      font-size: 0.85rem;
+      color: #4b5563;
+      margin-bottom: 0.6rem;
+    }
+
+    .service-meta {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-bottom: 0.6rem;
+    }
+
+    .service-card .btn-secondary {
+      align-self: flex-start;
+      font-size: 0.8rem;
+    }
+
+    /* Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .gallery-item {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+      background: #000;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.03);
+      opacity: 0.95;
+    }
+
+    .gallery-caption {
+      padding: 0.5rem 0.75rem 0.75rem;
+      background: #ffffff;
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+
+    /* FAQ */
+    .faq-list {
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    details {
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 0.7rem 0.9rem;
+      background: #ffffff;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--primary);
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details[open] {
+      border-color: var(--secondary);
+      background: #fffaf5;
+    }
+
+    details p {
+      font-size: 0.9rem;
+      color: #374151;
+      margin-top: 0.45rem;
+    }
+
+    /* Contact */
+    #contact .content {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 1.8rem;
+      align-items: start;
+    }
+
+    form {
+      background: #ffffff;
+      padding: 1.25rem;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.10);
+    }
+
+    form .field {
+      margin-bottom: 0.75rem;
+    }
+
+    form label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    form input,
+    form select,
+    form textarea {
+      width: 100%;
+      font-size: 0.9rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      resize: vertical;
+    }
+
+    form textarea {
+      min-height: 90px;
+    }
+
+    .contact-info {
+      font-size: 0.9rem;
+      color: #374151;
+    }
+
+    .contact-info p {
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-info a {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    footer {
+      border-top: 1px solid #e5e7eb;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6b7280;
+      background: #fafafa;
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner,
+      #about .content,
+      #contact .content {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 3.5rem;
+      }
+
+      .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      nav ul {
+        display: none; /* keeping mobile super simple for class project */
+      }
+
+      .card-grid,
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        margin-top: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER / NAV -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">HDS • Home Design Solutions</div>
+      <nav>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero" class="hero">
+    <div class="hero-inner">
+      <div>
+        <h1>Kitchen & Bath Cabinetry Designed Around Your Home.</h1>
+        <p>
+          Home Design Solutions (HDS) helps you plan beautiful, functional kitchens,
+          baths, and laundry spaces with cabinetry that fits your style and budget.
+        </p>
+
+        <div class="hero-badges">
+          <span class="badge">Kitchen & Bath Specialists</span>
+          <span class="badge">Cabinets for New Builds & Remodels</span>
+          <span class="badge">KCMA-Certified Options Available</span>
+        </div>
+
+        <div class="btn-row">
+          <a href="#gallery" class="btn-primary">View Sample Designs</a>
+          <a href="#contact" class="btn-secondary">Schedule a Consultation</a>
+        </div>
+      </div>
+
+      <!-- “Interface” card that actually does something -->
+      <div class="hero-card">
+        <h2>Quick Project Snapshot</h2>
+        <p>Use this mock interface to outline your kitchen or bath project details.</p>
+
+        <form action="mailto:info@hds-example.com" method="post" enctype="text/plain">
+          <div class="hero-form-row">
+            <div>
+              <label for="project-type">Project Type</label>
+              <select id="project-type" name="Project Type">
+                <option>Kitchen cabinets</option>
+                <option>Bath vanity</option>
+                <option>Whole-room cabinetry</option>
+                <option>Home office / laundry</option>
+              </select>
+            </div>
+            <div>
+              <label for="timeline">Target Timeline</label>
+              <select id="timeline" name="Timeline">
+                <option>Just exploring</option>
+                <option>0–3 months</option>
+                <option>3–6 months</option>
+                <option>6+ months</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="hero-form-row">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" name="Name" type="text" placeholder="Your name" />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="Email" type="email" placeholder="you@example.com" />
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" style="margin-top:0.6rem;width:100%;">
+            Email My Project Snapshot
+          </button>
+
+          <small>
+            For the course project, this form demonstrates where real scheduling
+            and pricing tools would connect in a production system.
+          </small>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-header">
+        <h2>About Home Design Solutions</h2>
+        <p>
+          HDS works with homeowners, remodelers, and custom builders to create cabinetry
+          layouts that balance cost, quality, and style. Our designers help you choose
+          options that will work with your space and long-term plans.
+        </p>
+      </div>
+
+      <div class="content">
+        <div>
+          <p>
+            Whether you are updating a single bath vanity or planning a full kitchen
+            redesign, HDS can provide cabinet designs, layout options, and guidance on
+            countertop materials. We coordinate directly with your contractor or builder
+            so your cabinets are ordered correctly and arrive on schedule.
+          </p>
+          <br />
+          <p>
+            This site is a prototype scheduling and information tool for our
+            <strong>HRS capstone project</strong>. In a real deployment, it would connect
+            to a database to track customers, projects, and cabinet lines.
+          </p>
+        </div>
+
+        <div class="about-highlight">
+          <strong>What we focus on:</strong><br />
+          • Matching cabinet options to your budget and timeline<br />
+          • Providing practical storage features (drawers, organizers, soft-close hardware)<br />
+          • Coordinating kitchen, bath, laundry, and office cabinetry for a cohesive look<br />
+          • Guiding you through countertop and finish selections
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="section-inner">
+        <div class="section-header">
+          <h2>Cabinetry & Design Services</h2>
+          <p>
+            HDS specializes in “light” kitchen, office, and laundry room remodeling,
+            as well as cabinetry for new construction. Use the buttons below to jump
+            directly to contact so every interface is functional.
+          </p>
+        </div>
+
+        <div class="card-grid">
+          <article class="service-card">
+            <div>
+              <h3>Kitchen Cabinet Design</h3>
+              <p>
+                Layouts optimized for workflow, storage, and appliance placement,
+                with options from basic to bold.
+              </p>
+            </div>
+            <div>
+              <p class="service-meta">Typical order time: 3–8 weeks</p>
+              <a href="#contact" class="btn-secondary">Discuss kitchen project</a>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <div>
+              <h3>Bath Vanities & Storage</h3>
+              <p>
+                Cabinet solutions for baths and powder rooms that coordinate with
+                your tile, tops, and fixtures.
+              </p>
+            </div>
+            <div>
+              <p class="service-meta">Great for remodels & additions</p>
+              <a href="#contact" class="btn-secondary">Plan my bath</a>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <div>
+              <h3>Laundry & Home Office</h3>
+              <p>
+                Functional cabinetry for laundry rooms, mudrooms, and home offices,
+                designed around how you work.
+              </p>
+            </div>
+            <div>
+              <p class="service-meta">Custom organization options</p>
+              <a href="#contact" class="btn-secondary">Talk storage ideas</a>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <div>
+              <h3>Builder & Remodeler Support</h3>
+              <p>
+                We partner with builders to specify cabinet lines, sizes, and finishes
+                that fit each project’s budget.
+              </p>
+            </div>
+            <div>
+              <p class="service-meta">New construction & remodels</p>
+              <a href="#contact" class="btn-secondary">Coordinate with my builder</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY (sample images) -->
+    <section id="gallery">
+      <div class="section-header">
+        <h2>Sample Kitchen & Bath Images</h2>
+        <p>
+          These sample photos show the type of finished spaces HDS works on. For the
+          class project, you can replace these with your own images later.
+        </p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img
+            src="https://images.pexels.com/photos/1080696/pexels-photo-1080696.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            alt="Modern white kitchen with large island"
+          />
+          <div class="gallery-caption">Modern white kitchen with large island and quartz tops.</div>
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://images.pexels.com/photos/2089698/pexels-photo-2089698.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            alt="Warm wood kitchen cabinetry"
+          />
+          <div class="gallery-caption">Warm wood cabinetry with open shelving and soft-close drawers.</div>
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://images.pexels.com/photos/1457841/pexels-photo-1457841.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            alt="Bathroom vanity with double sinks"
+          />
+          <div class="gallery-caption">Bath vanity with double sinks and framed mirror storage.</div>
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://images.pexels.com/photos/1027508/pexels-photo-1027508.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            alt="Kitchen cabinets and island in neutral tones"
+          />
+          <div class="gallery-caption">Neutral kitchen with mix of cabinet heights and glass doors.</div>
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            alt="Bathroom cabinets and tub"
+          />
+          <div class="gallery-caption">Coordinated bath cabinetry and tub surround.</div>
+        </div>
+        <div class="gallery-item">
+          <img
+            src="https://images.pexels.com/photos/6489083/pexels-photo-6489083.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            alt="Laundry cabinetry and storage"
+          />
+          <div class="gallery-caption">Laundry room cabinets with upper storage and folding space.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="section-header">
+        <h2>Frequently Asked Questions</h2>
+        <p>
+          Here are answers to the most common questions we receive about cabinet costs,
+          timelines, design services, and construction options.
+        </p>
+      </div>
+
+      <div class="faq-list">
+        <details>
+          <summary>How much will my cabinets cost?</summary>
+          <p>
+            Cabinets vary dramatically in price just like cars or houses. Entry-level
+            cabinets are less expensive than cabinets with special finishes and upgraded
+            storage features. HDS provides cabinetry that fits most any budget—from
+            basic to bold.
+          </p>
+        </details>
+
+        <details>
+          <summary>How long will it take to get the cabinets I order?</summary>
+          <p>
+            Order time varies depending on the manufacturer and the complexity of the
+            job. The minimum time is roughly three weeks and can be as much as eight
+            weeks during peak times of the year.
+          </p>
+        </details>
+
+        <details>
+          <summary>Can you design my kitchen from a sketch of the room that I provide?</summary>
+          <p>
+            We can certainly start with a sketch you provide. Your forethought in doing
+            some homework can shorten the time needed to design the final layout.
+            However, we will always do our own measurements to verify that the design
+            will actually work.
+          </p>
+        </details>
+
+        <details>
+          <summary>What is the best type of countertop for the kitchen?</summary>
+          <p>
+            There are many possible countertop choices. As with cabinets, your budget
+            needs to be matched with your desire for flexibility of design and product
+            longevity. Laminate, solid surface, quartz-enhanced, and granite are all
+            good choices.
+          </p>
+        </details>
+
+        <details>
+          <summary>Can you match my existing cabinets or furniture?</summary>
+          <p>
+            All woods and stains change color over time—some more so than others.
+            In many cases, HDS can find cabinetry that may be compatible with your
+            existing cabinets or furniture. In no case can we guarantee an exact match.
+          </p>
+        </details>
+
+        <details>
+          <summary>What construction features should I look for when choosing cabinets?</summary>
+          <p>
+            Certain construction features are a sign of quality cabinets. A savvy
+            consumer will look for things such as finished backs in all cabinets, drawer
+            guides that also support the drawer bottom, conversion varnish finishes,
+            multi-way adjustable hinges, adjustable shelves, and a wide range of heights
+            and depths. Newer convenience features include soft-close hinges and drawers,
+            multi-function drawer systems, and optional task lighting.
+          </p>
+          <p>
+            Be sure to check for the KCMA (Kitchen Cabinet Manufacturers Association)
+            label, a certification that the cabinets meet construction standards
+            designed to ensure many years of trouble-free service.
+          </p>
+        </details>
+
+        <details>
+          <summary>What are the most popular types of cabinets?</summary>
+          <p>
+            While popular cabinet styles and trends vary from year to year, traditional
+            raised-panel oak styling is always a favorite due to affordability and
+            durability. A current trend is a stand-alone furniture look that allows
+            for highly customized design features using cabinetry from major
+            manufacturers.
+          </p>
+          <p>
+            Besides oak, certain wood species tend to be favored by today’s consumers.
+            Maple is frequently used in remodeling because of its clean look and ability
+            to blend with most existing finishes. Cherry has become increasingly popular
+            as manufacturers have developed a variety of finishes allowing it to work in
+            more applications.
+          </p>
+        </details>
+
+        <details>
+          <summary>Are environmentally “green” cabinets available at a reasonable price?</summary>
+          <p>
+            HDS represents several manufacturers across the price spectrum whose
+            cabinets are certified under the Environmental Stewardship Program developed
+            by the KCMA (Kitchen Cabinet Manufacturers Association).
+          </p>
+        </details>
+
+        <details>
+          <summary>What's the difference between manufactured cabinets and custom-made cabinets?</summary>
+          <p>
+            Years ago there was a significant difference in the sizes and finishes
+            available from custom cabinetmakers and stock manufacturers. Today, many
+            cabinet manufacturers offer custom sizing and finishes that rival, and may
+            even exceed, the possibilities of a local custom cabinet shop.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            Do you charge a design fee, measure fee, or other fees in addition to the contract price
+            for cabinets and installation?
+          </summary>
+          <p>
+            HDS does not charge a measure fee or a design fee for a first design or
+            estimate. In some cases, where multiple design revisions are requested,
+            a design retainer may be requested. That retainer is then credited in full
+            to the final cost of the job.
+          </p>
+        </details>
+
+        <details>
+          <summary>Do you do major remodeling?</summary>
+          <p>
+            HDS specializes in light kitchen, office, or laundry room remodeling. We
+            have strong working relationships with several quality, full-line
+            remodeling firms for those jobs that require major structural renovation.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            Do you provide cabinets for remodeling only, or also for new construction?
+          </summary>
+          <p>
+            HDS works with a number of reputable remodelers and can provide cabinets
+            through your contractor or directly to you for your kitchen or bath
+            remodeling project or room addition. We also work with many custom home
+            builders who consult with our designers to assure that the layouts for
+            kitchen cabinets, bath cabinets, laundry room cabinets, and other cabinetry
+            are chosen to properly fit the budget and space. We will coordinate directly
+            with your builder and also consult directly with you.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-header">
+        <h2>Request a Design Consultation</h2>
+        <p>
+          Every button on this page leads somewhere—here you can see where a real
+          scheduling workflow would start. For this project, the form can be submitted
+          via email or shown as an example of a working interface.
+        </p>
+      </div>
+
+      <div class="content">
+        <form action="mailto:info@hds-example.com" method="post" enctype="text/plain">
+          <div class="field">
+            <label for="full-name">Full Name</label>
+            <input id="full-name" name="Full Name" type="text" required />
+          </div>
+          <div class="field">
+            <label for="contact-email">Email</label>
+            <input id="contact-email" name="Email" type="email" required />
+          </div>
+          <div class="field">
+            <label for="phone">Phone (optional)</label>
+            <input id="phone" name="Phone" type="tel" />
+          </div>
+          <div class="field">
+            <label for="service">Interested In</label>
+            <select id="service" name="Service">
+              <option>Kitchen cabinets</option>
+              <option>Bath cabinetry</option>
+              <option>Laundry / mudroom</option>
+              <option>Home office cabinetry</option>
+              <option>Builder / contractor project</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="details">Project Details</label>
+            <textarea id="details" name="Project Details" placeholder="Briefly describe your space and goals."></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary">Send Consultation Request</button>
+        </form>
+
+        <div class="contact-info">
+          <p><strong>Sample HDS Contact Info</strong></p>
+          <p>
+            Phone:
+            <a href="tel:5551234567">(555) 123-4567</a>
+          </p>
+          <p>
+            Email:
+            <a href="mailto:info@hds-example.com">info@hds-example.com</a>
+          </p>
+          <p>
+            For the HRS capstone project, this section demonstrates how visitors would
+            reach HDS and how your system would capture their information for follow-up.
+          </p>
+          <p style="margin-top:0.8rem;">
+            <a href="#hero">Back to top</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Home Design Solutions (HDS). Capstone project prototype – not a live
+    ordering site.
+  </footer>
+</body>
 </html>
