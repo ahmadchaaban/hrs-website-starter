@@ -161,7 +161,7 @@ export default function App() {
             </details>
           ))}
         </div>
-        <p className="text-xs text-gray-500 mt-3">Full FAQ content sourced from HDS-FAQs.docx.</p>
+        <p className="text-xs text-gray-500 mt-3">Full FAQ content sourced from HRS-FAQs.docx.</p>
       </Section>
     )},
     { value: 'locations', label: 'Locations', content: (
